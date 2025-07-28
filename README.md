@@ -1,13 +1,44 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# APMC Frontend - All Pakistan Music Conference
+
+A modern, responsive web application for the All Pakistan Music Conference built with Next.js 15, TypeScript, and Tailwind CSS.
+
+## Features
+
+- **🎵 Music Festival Platform**: Complete frontend for a traditional Pakistani music conference
+- **🔐 Role-Based Access Control**: Different access levels for Admin, Judge, and public users
+- **📱 Mobile-First Design**: Responsive design optimized for all devices
+- **🎨 Pakistani Cultural Design**: Colors and design inspired by Pakistani traditional aesthetics
+- **⚡ Modern Tech Stack**: Built with the latest Next.js, TypeScript, and Tailwind CSS
+
+## Demo Credentials
+
+### Admin Access
+- **Username**: `admin`
+- **Password**: `admin123`
+- **Access**: Full access to all areas including admin panel
+
+### Judge Access
+- **Username**: `judge`
+- **Password**: `judge123`
+- **Access**: Access to judge-specific areas in auditions and finals
+
+### Public Access
+- No login required for public information like performance lists and results
 
 ## Getting Started
 
-First, run the development server:
+1. **Install Dependencies**
+   ```bash
+   npm install
+   ```
 
-```bash
-npm run dev
-# or
-yarn dev
+2. **Run Development Server**
+   ```bash
+   npm run dev
+   ```
+
+3. **Open Browser**
+   Navigate to [http://localhost:3000](http://localhost:3000)
 # or
 pnpm dev
 # or

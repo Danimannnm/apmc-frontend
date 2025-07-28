@@ -1,238 +1,169 @@
 'use client';
 
-import React from 'react';
+import { useAuth } from '@/context/AuthContext';
+import Layout from '@/components/Layout';
 import { 
-  MicrophoneIcon, 
-  TrophyIcon, 
-  MusicalNoteIcon,
-  ClockIcon,
+  MusicalNoteIcon, 
+  StarIcon, 
+  CalendarDaysIcon,
   MapPinIcon,
-  UserGroupIcon,
-  StarIcon,
-  CalendarDaysIcon
+  TrophyIcon,
+  UserGroupIcon
 } from '@heroicons/react/24/outline';
+import Link from 'next/link';
 
-const HomePage = () => {
-  const conferenceFeatures = [
+export default function HomePage() {
+  const { user } = useAuth();
+
+  const features = [
     {
-      icon: MicrophoneIcon,
-      title: 'Auditions',
-      description: 'Open auditions for talented musicians across Pakistan',
-      color: 'from-blue-500 to-blue-600'
+      icon: <MusicalNoteIcon className="w-8 h-8" />,
+      title: "Traditional Music",
+      description: "Celebrating the rich heritage of Pakistani classical and folk music"
     },
     {
-      icon: TrophyIcon,
-      title: 'Final Competition',
-      description: 'Grand finale showcasing the best musical talents',
-      color: 'from-yellow-500 to-yellow-600'
+      icon: <TrophyIcon className="w-8 h-8" />,
+      title: "Competition",
+      description: "Multi-stage competition from auditions to grand finals"
     },
     {
-      icon: MusicalNoteIcon,
-      title: 'Multiple Categories',
-      description: 'Classical, Folk, Contemporary, and Fusion music categories',
-      color: 'from-purple-500 to-purple-600'
+      icon: <UserGroupIcon className="w-8 h-8" />,
+      title: "Expert Judges",
+      description: "Renowned musicians and scholars evaluating performances"
     },
     {
-      icon: UserGroupIcon,
-      title: 'Expert Judges',
-      description: 'Renowned musicians and industry experts as judges',
-      color: 'from-green-500 to-green-600'
+      icon: <StarIcon className="w-8 h-8" />,
+      title: "Cultural Excellence",
+      description: "Promoting and preserving Pakistan's musical traditions"
     }
   ];
 
-  const eventHighlights = [
+  const eventDetails = [
     {
-      icon: CalendarDaysIcon,
-      title: 'Event Schedule',
-      description: 'Multi-day conference with workshops and performances'
+      icon: <CalendarDaysIcon className="w-6 h-6" />,
+      label: "Event Dates",
+      value: "March 15-20, 2025"
     },
     {
-      icon: MapPinIcon,
-      title: 'Venue Information',
-      description: 'Premium venues across major cities in Pakistan'
-    },
-    {
-      icon: ClockIcon,
-      title: 'Timeline',
-      description: 'Structured timeline from auditions to final results'
-    },
-    {
-      icon: StarIcon,
-      title: 'Recognition',
-      description: 'Awards and recognition for outstanding performances'
+      icon: <MapPinIcon className="w-6 h-6" />,
+      label: "Venue",
+      value: "National Academy of Performing Arts, Karachi"
     }
   ];
 
   return (
-    <div className="min-h-screen">
-      {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900 text-white rounded-2xl mb-12">
-        <div className="absolute inset-0 bg-black/20"></div>
-        <div className="relative z-10 px-8 py-16 lg:py-24">
-          <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
-              All Pakistan
-              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-500">
-                Music Conference
-              </span>
+    <Layout>
+      <div className="max-w-7xl mx-auto">
+        {/* Hero Section */}
+        <div className="text-center mb-16">
+          <div className="mb-8">
+            <h1 className="text-4xl md:text-6xl font-bold text-charcoal mb-4">
+              All Pakistan Music Conference
             </h1>
-            <p className="text-xl md:text-2xl mb-8 text-gray-200 leading-relaxed max-w-3xl mx-auto">
-              Celebrating the rich musical heritage of Pakistan through talent discovery, 
-              cultural exchange, and artistic excellence.
+            <p className="text-xl md:text-2xl text-gray-600 mb-8">
+              Celebrating Traditional Pakistani Music Heritage
             </p>
-            <div className="flex justify-center">
-              <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl px-8 py-4">
-                <div className="text-sm text-gray-300 font-medium">Next Event</div>
-                <div className="text-xl font-bold">Coming Soon 2025</div>
-              </div>
+            <div className="w-24 h-1 bg-saffron mx-auto rounded-full"></div>
+          </div>
+
+          {/* Welcome message based on user role */}
+          {user && (
+            <div className="mb-8 p-6 bg-emerald-50 border border-emerald-200 rounded-lg max-w-2xl mx-auto">
+              <h2 className="text-xl font-semibold text-emerald-700 mb-2">
+                Welcome back, {user.username}!
+              </h2>
+              <p className="text-emerald-600 capitalize">
+                Logged in as: <span className="font-medium">{user.role}</span>
+              </p>
             </div>
+          )}
+
+          {/* CTA Buttons */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link 
+              href="/auditions/performances"
+              className="px-8 py-3 bg-emerald-600 text-white rounded-lg font-semibold hover:bg-emerald-700 transition-colors duration-200"
+            >
+              View Auditions
+            </Link>
+            <Link 
+              href="/finals/performances"
+              className="px-8 py-3 bg-saffron text-charcoal rounded-lg font-semibold hover:bg-yellow-400 transition-colors duration-200"
+            >
+              View Finals
+            </Link>
+            {!user && (
+              <Link 
+                href="/login"
+                className="px-8 py-3 border-2 border-emerald-600 text-emerald-600 rounded-lg font-semibold hover:bg-emerald-600 hover:text-white transition-colors duration-200"
+              >
+                Staff Login
+              </Link>
+            )}
           </div>
         </div>
-        {/* Decorative elements */}
-        <div className="absolute top-10 left-10 w-24 h-24 bg-yellow-400/20 rounded-full blur-xl"></div>
-        <div className="absolute bottom-10 right-10 w-32 h-32 bg-blue-400/20 rounded-full blur-xl"></div>
-      </section>
 
-      {/* Features Section */}
-      <section className="mb-16">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            Conference Features
-          </h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Experience the comprehensive music conference designed to showcase and nurture musical talent
-          </p>
-        </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {conferenceFeatures.map((feature, index) => (
-            <div 
-              key={index}
-              className="group bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 p-6 text-center border border-gray-100 hover:border-gray-200"
-            >
-              <div className={`bg-gradient-to-r ${feature.color} w-14 h-14 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300`}>
-                <feature.icon className="h-7 w-7 text-white" />
+        {/* Event Details */}
+        <div className="grid md:grid-cols-2 gap-6 mb-16">
+          {eventDetails.map((detail, index) => (
+            <div key={index} className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
+              <div className="flex items-center space-x-4">
+                <div className="p-3 bg-emerald-100 rounded-lg text-emerald-600">
+                  {detail.icon}
+                </div>
+                <div>
+                  <h3 className="font-semibold text-charcoal">{detail.label}</h3>
+                  <p className="text-gray-600">{detail.value}</p>
+                </div>
               </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">
+            </div>
+          ))}
+        </div>
+
+        {/* Features Grid */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+          {features.map((feature, index) => (
+            <div key={index} className="bg-white rounded-xl shadow-lg p-6 border border-gray-100 text-center hover:shadow-xl transition-shadow duration-300">
+              <div className="mb-4 text-emerald-600 flex justify-center">
+                {feature.icon}
+              </div>
+              <h3 className="text-lg font-semibold text-charcoal mb-2">
                 {feature.title}
               </h3>
-              <p className="text-gray-600 text-sm leading-relaxed">
+              <p className="text-gray-600 text-sm">
                 {feature.description}
               </p>
             </div>
           ))}
         </div>
-      </section>
 
-      {/* Event Highlights */}
-      <section className="mb-16">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            Event Highlights
+        {/* About Section */}
+        <div className="bg-gradient-primary rounded-2xl p-8 md:p-12 text-white text-center">
+          <h2 className="text-3xl md:text-4xl font-bold mb-6">
+            About APMC
           </h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Discover what makes APMC a premier musical event in Pakistan
+          <p className="text-lg md:text-xl text-emerald-100 max-w-4xl mx-auto leading-relaxed">
+            The All Pakistan Music Conference is the premier platform for celebrating and preserving 
+            the rich tradition of Pakistani classical and folk music. Our annual conference brings 
+            together talented musicians from across the nation to compete, perform, and share their 
+            artistic heritage with audiences worldwide.
           </p>
-        </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {eventHighlights.map((highlight, index) => (
-            <div 
-              key={index}
-              className="bg-white rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 p-8 flex items-start space-x-6 border border-gray-100"
-            >
-              <div className="bg-gradient-to-r from-blue-500 to-purple-500 w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0">
-                <highlight.icon className="h-6 w-6 text-white" />
-              </div>
-              <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                  {highlight.title}
-                </h3>
-                <p className="text-gray-600 leading-relaxed">
-                  {highlight.description}
-                </p>
-              </div>
+          <div className="mt-8 grid md:grid-cols-3 gap-6 text-center">
+            <div>
+              <div className="text-3xl font-bold text-saffron">50+</div>
+              <div className="text-emerald-100">Participants</div>
             </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Information Cards */}
-      <section>
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* About Card */}
-          <div className="bg-gradient-to-br from-blue-600 to-purple-600 rounded-2xl text-white p-8">
-            <h3 className="text-2xl font-bold mb-4">About APMC</h3>
-            <p className="text-blue-100 leading-relaxed mb-6">
-              The All Pakistan Music Conference is a prestigious platform that celebrates 
-              and promotes the diverse musical traditions of Pakistan while fostering new talent.
-            </p>
-            <div className="space-y-3 text-sm">
-              <div className="flex items-center space-x-3">
-                <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
-                <span>Cultural Heritage Preservation</span>
-              </div>
-              <div className="flex items-center space-x-3">
-                <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
-                <span>Talent Development</span>
-              </div>
-              <div className="flex items-center space-x-3">
-                <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
-                <span>Community Building</span>
-              </div>
+            <div>
+              <div className="text-3xl font-bold text-saffron">15+</div>
+              <div className="text-emerald-100">Expert Judges</div>
             </div>
-          </div>
-
-          {/* Participation Card */}
-          <div className="bg-white rounded-2xl shadow-sm p-8 border border-gray-100">
-            <h3 className="text-2xl font-bold text-gray-900 mb-6">How to Participate</h3>
-            <div className="space-y-6">
-              <div className="flex items-start space-x-4">
-                <div className="bg-blue-100 text-blue-600 rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold flex-shrink-0">1</div>
-                <div>
-                  <div className="font-semibold text-gray-900 mb-1">Register</div>
-                  <div className="text-gray-600 text-sm">Submit your application with performance samples</div>
-                </div>
-              </div>
-              <div className="flex items-start space-x-4">
-                <div className="bg-blue-100 text-blue-600 rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold flex-shrink-0">2</div>
-                <div>
-                  <div className="font-semibold text-gray-900 mb-1">Audition</div>
-                  <div className="text-gray-600 text-sm">Participate in regional auditions</div>
-                </div>
-              </div>
-              <div className="flex items-start space-x-4">
-                <div className="bg-blue-100 text-blue-600 rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold flex-shrink-0">3</div>
-                <div>
-                  <div className="font-semibold text-gray-900 mb-1">Compete</div>
-                  <div className="text-gray-600 text-sm">Advance to final competition</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Contact Card */}
-          <div className="bg-gradient-to-br from-green-600 to-teal-600 rounded-2xl text-white p-8">
-            <h3 className="text-2xl font-bold mb-4">Get Involved</h3>
-            <p className="text-green-100 leading-relaxed mb-6">
-              Join us in celebrating Pakistan&apos;s musical heritage. Whether you&apos;re a musician, 
-              music enthusiast, or supporter of the arts.
-            </p>
-            <div className="space-y-4">
-              <div className="text-sm">
-                <div className="font-semibold mb-1">Email</div>
-                <div className="text-green-200">info@apmc.pk</div>
-              </div>
-              <div className="text-sm">
-                <div className="font-semibold mb-1">Follow Updates</div>
-                <div className="text-green-200">Stay tuned for announcements</div>
-              </div>
+            <div>
+              <div className="text-3xl font-bold text-saffron">6</div>
+              <div className="text-emerald-100">Days of Music</div>
             </div>
           </div>
         </div>
-      </section>
-    </div>
+      </div>
+    </Layout>
   );
-};
-
-export default HomePage;
+}

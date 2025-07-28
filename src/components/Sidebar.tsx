@@ -1,214 +1,204 @@
 'use client';
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
-import { useAuth } from '@/contexts/AuthContext';
-import { ChevronDownIcon, ChevronRightIcon, Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
+import { useAuth } from '@/context/AuthContext';
+import { UserRole, NavItem } from '@/types';
 import { 
-  HomeIcon,
-  MicrophoneIcon,
+  ChevronDownIcon, 
+  ChevronRightIcon,
+  Bars3Icon,
+  XMarkIcon,
+  UserIcon,
   TrophyIcon,
-  UserGroupIcon,
-  ClipboardDocumentListIcon,
-  ChartBarIcon,
-  Cog6ToothIcon,
-  ArrowRightOnRectangleIcon
+  MusicalNoteIcon,
+  ShieldCheckIcon
 } from '@heroicons/react/24/outline';
 
-interface MenuItem {
-  title: string;
-  href?: string;
-  icon?: React.ComponentType<{ className?: string }>;
-  children?: MenuItem[];
-  requiresRole?: 'admin' | 'judge';
-}
-
-const menuItems: MenuItem[] = [
-  {
-    title: 'Home',
-    href: '/',
-    icon: HomeIcon,
-  },
-  {
-    title: 'Auditions',
-    icon: MicrophoneIcon,
-    children: [
-      { title: 'Performance List', href: '/auditions/performances', icon: ClipboardDocumentListIcon },
-      { title: 'Judges', href: '/auditions/judges', icon: UserGroupIcon, requiresRole: 'judge' },
-      { title: 'Results', href: '/auditions/results', icon: ChartBarIcon },
-    ],
-  },
-  {
-    title: 'Finals',
-    icon: TrophyIcon,
-    children: [
-      { title: 'Performance List', href: '/finals/performances', icon: ClipboardDocumentListIcon },
-      { title: 'Judges', href: '/finals/judges', icon: UserGroupIcon, requiresRole: 'judge' },
-      { title: 'Results', href: '/finals/results', icon: ChartBarIcon },
-    ],
-  },
-  {
-    title: 'Admin',
-    href: '/admin',
-    icon: Cog6ToothIcon,
-    requiresRole: 'admin',
-  },
-];
-
 export default function Sidebar() {
-  const { user, logout } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
-  const [expandedItems, setExpandedItems] = useState<string[]>(['Auditions', 'Finals']);
+  const [expandedItems, setExpandedItems] = useState<string[]>([]);
+  const { user, logout } = useAuth();
+
+  // Define navigation items based on user role
+  const getNavigationItems = (): NavItem[] => {
+    const baseItems: NavItem[] = [
+      {
+        title: 'Auditions',
+        href: '/auditions',
+        children: [
+          { title: 'Performance List', href: '/auditions/performances' },
+          { title: 'Judges', href: '/auditions/judges', requiredRoles: [UserRole.ADMIN, UserRole.JUDGE] },
+          { title: 'Results', href: '/auditions/results' }
+        ]
+      },
+      {
+        title: 'Finals',
+        href: '/finals',
+        children: [
+          { title: 'Performance List', href: '/finals/performances' },
+          { title: 'Judges', href: '/finals/judges', requiredRoles: [UserRole.ADMIN, UserRole.JUDGE] },
+          { title: 'Results', href: '/finals/results' }
+        ]
+      }
+    ];
+
+    // Add admin-only navigation
+    if (user?.role === UserRole.ADMIN) {
+      baseItems.push({
+        title: 'Admin',
+        href: '/admin',
+        requiredRoles: [UserRole.ADMIN],
+        children: [
+          { title: 'User Management', href: '/admin/users' },
+          { title: 'Event Settings', href: '/admin/settings' },
+          { title: 'Reports', href: '/admin/reports' }
+        ]
+      });
+    }
+
+    return baseItems;
+  };
 
   const toggleExpanded = (title: string) => {
-    setExpandedItems(prev =>
-      prev.includes(title)
+    setExpandedItems(prev => 
+      prev.includes(title) 
         ? prev.filter(item => item !== title)
         : [...prev, title]
     );
   };
 
-  const shouldShowItem = (item: MenuItem): boolean => {
-    if (!item.requiresRole) return true;
-    if (item.requiresRole === 'admin') return user?.role === 'admin';
-    if (item.requiresRole === 'judge') return user?.role === 'judge' || user?.role === 'admin';
-    return false;
+  const canAccessItem = (item: NavItem): boolean => {
+    if (!item.requiredRoles || !user) return true;
+    return item.requiredRoles.includes(user.role);
   };
 
-  const renderMenuItem = (item: MenuItem, level = 0) => {
-    if (!shouldShowItem(item)) return null;
-
-    const hasChildren = item.children && item.children.length > 0;
-    const isExpanded = expandedItems.includes(item.title);
-    const IconComponent = item.icon;
-
-    return (
-      <div key={item.title} className="w-full">
-        {hasChildren ? (
-          <button
-            onClick={() => toggleExpanded(item.title)}
-            className={`w-full flex items-center justify-between px-3 py-2.5 text-left rounded-lg transition-all duration-200 group ${
-              level > 0 
-                ? 'text-gray-600 hover:text-gray-900 hover:bg-gray-100 text-sm ml-4' 
-                : 'text-gray-700 hover:text-gray-900 hover:bg-gray-100 font-medium'
-            }`}
-          >
-            <div className="flex items-center space-x-3">
-              {IconComponent && <IconComponent className={`${level > 0 ? 'h-4 w-4' : 'h-5 w-5'}`} />}
-              <span>{item.title}</span>
-            </div>
-            {isExpanded ? (
-              <ChevronDownIcon className="h-4 w-4 transition-transform duration-200" />
-            ) : (
-              <ChevronRightIcon className="h-4 w-4 transition-transform duration-200" />
-            )}
-          </button>
-        ) : (
-          <Link
-            href={item.href || '#'}
-            onClick={() => setIsOpen(false)}
-            className={`flex items-center space-x-3 px-3 py-2.5 rounded-lg transition-all duration-200 group ${
-              level > 0 
-                ? 'text-gray-600 hover:text-gray-900 hover:bg-gray-100 text-sm ml-4' 
-                : 'text-gray-700 hover:text-gray-900 hover:bg-gray-100 font-medium'
-            }`}
-          >
-            {IconComponent && <IconComponent className={`${level > 0 ? 'h-4 w-4' : 'h-5 w-5'}`} />}
-            <span>{item.title}</span>
-          </Link>
-        )}
-        
-        {hasChildren && isExpanded && (
-          <div className="mt-1 space-y-1">
-            {item.children?.map(child => renderMenuItem(child, level + 1))}
-          </div>
-        )}
-      </div>
-    );
+  const getIcon = (title: string) => {
+    switch (title) {
+      case 'Auditions':
+      case 'Finals':
+        return <MusicalNoteIcon className="w-5 h-5" />;
+      case 'Admin':
+        return <ShieldCheckIcon className="w-5 h-5" />;
+      default:
+        return <TrophyIcon className="w-5 h-5" />;
+    }
   };
+
+  const navigationItems = getNavigationItems();
 
   return (
     <>
       {/* Mobile menu button */}
       <button
-        className="lg:hidden fixed top-4 left-4 z-50 p-2 bg-white rounded-lg shadow-lg border border-gray-200"
         onClick={() => setIsOpen(!isOpen)}
+        className="lg:hidden fixed top-4 left-4 z-50 p-2 rounded-md bg-emerald-600 text-white shadow-lg"
       >
-        {isOpen ? (
-          <XMarkIcon className="h-6 w-6 text-gray-600" />
-        ) : (
-          <Bars3Icon className="h-6 w-6 text-gray-600" />
-        )}
+        {isOpen ? <XMarkIcon className="w-6 h-6" /> : <Bars3Icon className="w-6 h-6" />}
       </button>
 
-      {/* Overlay for mobile */}
-      {isOpen && (
-        <div
-          className="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-30"
-          onClick={() => setIsOpen(false)}
-        />
-      )}
-
       {/* Sidebar */}
-      <div
-        className={`fixed top-0 left-0 h-full w-64 bg-white border-r border-gray-200 transform transition-transform duration-300 ease-in-out z-40 ${
-          isOpen ? 'translate-x-0' : '-translate-x-full'
-        } lg:translate-x-0`}
-      >
+      <div className={`
+        fixed inset-y-0 left-0 z-40 w-80 bg-emerald-600 text-white transform transition-transform duration-300 ease-in-out
+        ${isOpen ? 'translate-x-0' : '-translate-x-full'}
+        lg:translate-x-0 lg:static lg:inset-0
+      `}>
         <div className="flex flex-col h-full">
           {/* Header */}
-          <div className="flex items-center justify-between p-6 border-b border-gray-200">
-            <div className="flex items-center space-x-3">
-              <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">A</span>
-              </div>
-              <div>
-                <h1 className="text-lg font-bold text-gray-900">APMC</h1>
-                <p className="text-xs text-gray-500">Music Conference</p>
-              </div>
-            </div>
+          <div className="p-6 border-b border-emerald-500">
+            <h1 className="text-2xl font-bold text-center">
+              APMC
+            </h1>
+            <p className="text-emerald-200 text-sm text-center mt-1">
+              All Pakistan Music Conference
+            </p>
           </div>
 
           {/* Navigation */}
-          <nav className="flex-1 p-4 space-y-2 overflow-y-auto">
-            {menuItems.map(item => renderMenuItem(item))}
+          <nav className="flex-1 py-6 px-4 overflow-y-auto">
+            <ul className="space-y-2">
+              {navigationItems.map((item) => (
+                <li key={item.title}>
+                  <div className="space-y-1">
+                    {/* Parent item */}
+                    <button
+                      onClick={() => toggleExpanded(item.title)}
+                      className="w-full flex items-center justify-between px-3 py-2 rounded-lg hover:bg-emerald-500 transition-colors duration-200"
+                    >
+                      <div className="flex items-center space-x-3">
+                        {getIcon(item.title)}
+                        <span className="font-medium">{item.title}</span>
+                      </div>
+                      {item.children && (
+                        expandedItems.includes(item.title) ? 
+                          <ChevronDownIcon className="w-4 h-4" /> : 
+                          <ChevronRightIcon className="w-4 h-4" />
+                      )}
+                    </button>
+
+                    {/* Child items */}
+                    {item.children && expandedItems.includes(item.title) && (
+                      <ul className="ml-8 space-y-1">
+                        {item.children
+                          .filter(canAccessItem)
+                          .map((child) => (
+                            <li key={child.href}>
+                              <Link
+                                href={child.href}
+                                className="block px-3 py-2 text-sm rounded-lg hover:bg-emerald-500 transition-colors duration-200"
+                                onClick={() => setIsOpen(false)}
+                              >
+                                {child.title}
+                              </Link>
+                            </li>
+                          ))
+                        }
+                      </ul>
+                    )}
+                  </div>
+                </li>
+              ))}
+            </ul>
           </nav>
 
-          {/* User section */}
-          <div className="p-4 border-t border-gray-200">
+          {/* User info and logout */}
+          <div className="p-4 border-t border-emerald-500">
             {user ? (
               <div className="space-y-3">
-                <div className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
-                  <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                    <span className="text-blue-600 font-medium text-sm">
-                      {user.name.charAt(0).toUpperCase()}
-                    </span>
-                  </div>
+                <div className="flex items-center space-x-3 px-3 py-2 bg-emerald-500 rounded-lg">
+                  <UserIcon className="w-5 h-5" />
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-gray-900 truncate">{user.name}</p>
-                    <p className="text-xs text-gray-500 capitalize">{user.role}</p>
+                    <p className="text-sm font-medium truncate">{user.username}</p>
+                    <p className="text-xs text-emerald-200 capitalize">{user.role}</p>
                   </div>
                 </div>
                 <button
                   onClick={logout}
-                  className="w-full flex items-center justify-center space-x-2 p-2 text-sm text-red-600 hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors"
+                  className="w-full px-3 py-2 text-sm bg-maroon text-white rounded-lg hover:bg-red-700 transition-colors duration-200"
                 >
-                  <ArrowRightOnRectangleIcon className="h-4 w-4" />
-                  <span>Logout</span>
+                  Logout
                 </button>
               </div>
             ) : (
               <Link
                 href="/login"
+                className="block w-full px-3 py-2 text-sm text-center bg-saffron text-charcoal rounded-lg hover:bg-yellow-400 transition-colors duration-200"
                 onClick={() => setIsOpen(false)}
-                className="w-full flex items-center justify-center space-x-2 p-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors font-medium"
               >
-                <span>Login</span>
+                Login
               </Link>
             )}
           </div>
         </div>
       </div>
+
+      {/* Overlay for mobile */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 z-30 lg:hidden"
+          onClick={() => setIsOpen(false)}
+        />
+      )}
     </>
   );
 }

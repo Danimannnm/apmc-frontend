@@ -1,87 +1,112 @@
 'use client';
 
-import React, { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { useAuth } from '@/context/AuthContext';
 import Link from 'next/link';
-import { useAuth } from '@/contexts/AuthContext';
 import { 
   EyeIcon, 
-  EyeSlashIcon, 
-  UserIcon, 
+  EyeSlashIcon,
+  UserIcon,
   LockClosedIcon,
-  ExclamationCircleIcon 
+  MusicalNoteIcon
 } from '@heroicons/react/24/outline';
 
-const LoginPage = () => {
-  const [formData, setFormData] = useState({
-    username: '',
-    password: ''
-  });
+export default function LoginPage() {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
-
-  const { login } = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
+  
+  const { login, user } = useAuth();
   const router = useRouter();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-    if (error) setError('');
-  };
+  // Redirect if already logged in
+  useEffect(() => {
+    if (user) {
+      router.push('/');
+    }
+  }, [user, router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
     setError('');
+    setIsLoading(true);
 
     try {
-      // Simulate loading delay
-      await new Promise(resolve => setTimeout(resolve, 800));
-      
-      const success = login(formData.username, formData.password);
-      
+      const success = await login(username, password);
       if (success) {
         router.push('/');
       } else {
         setError('Invalid username or password');
       }
+    } catch {
+      setError('An error occurred. Please try again.');
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
-  const demoCredentials = [
-    { role: 'Admin', username: 'admin', password: 'admin123' },
-    { role: 'Judge', username: 'judge1', password: 'judge123' },
-    { role: 'Judge', username: 'judge2', password: 'judge123' }
-  ];
+  const fillDemoCredentials = (role: 'admin' | 'judge') => {
+    if (role === 'admin') {
+      setUsername('admin');
+      setPassword('admin123');
+    } else {
+      setUsername('judge');
+      setPassword('judge123');
+    }
+  };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 flex items-center justify-center p-4">
-      <div className="max-w-md w-full">
+    <div className="min-h-screen bg-ivory flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-md w-full space-y-8">
         {/* Header */}
-        <div className="text-center mb-8">
-          <div className="bg-white/10 backdrop-blur-sm rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-            <UserIcon className="h-8 w-8 text-white" />
+        <div className="text-center">
+          <div className="flex justify-center mb-6">
+            <div className="p-4 bg-emerald-600 rounded-full">
+              <MusicalNoteIcon className="w-8 h-8 text-white" />
+            </div>
           </div>
-          <h1 className="text-3xl font-bold text-white mb-2">Welcome Back</h1>
-          <p className="text-blue-200">Sign in to access APMC Management</p>
+          <h2 className="text-3xl font-bold text-charcoal">
+            Staff Login
+          </h2>
+          <p className="mt-2 text-gray-600">
+            APMC - All Pakistan Music Conference
+          </p>
+        </div>
+
+        {/* Demo Credentials */}
+        <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+          <h3 className="text-sm font-medium text-yellow-800 mb-3">Demo Credentials:</h3>
+          <div className="space-y-2">
+            <button
+              type="button"
+              onClick={() => fillDemoCredentials('admin')}
+              className="block w-full text-left text-sm text-yellow-700 hover:text-yellow-900 hover:bg-yellow-100 px-2 py-1 rounded"
+            >
+              <strong>Admin:</strong> admin / admin123
+            </button>
+            <button
+              type="button"
+              onClick={() => fillDemoCredentials('judge')}
+              className="block w-full text-left text-sm text-yellow-700 hover:text-yellow-900 hover:bg-yellow-100 px-2 py-1 rounded"
+            >
+              <strong>Judge:</strong> judge / judge123
+            </button>
+          </div>
         </div>
 
         {/* Login Form */}
-        <div className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl p-8">
-          <form onSubmit={handleSubmit} className="space-y-6">
+        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+          <div className="space-y-4">
             {/* Username Field */}
             <div>
-              <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="username" className="sr-only">
                 Username
               </label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center">
                   <UserIcon className="h-5 w-5 text-gray-400" />
                 </div>
                 <input
@@ -89,21 +114,21 @@ const LoginPage = () => {
                   name="username"
                   type="text"
                   required
-                  value={formData.username}
-                  onChange={handleChange}
-                  className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
-                  placeholder="Enter your username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white"
+                  placeholder="Username"
                 />
               </div>
             </div>
 
             {/* Password Field */}
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="password" className="sr-only">
                 Password
               </label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center">
                   <LockClosedIcon className="h-5 w-5 text-gray-400" />
                 </div>
                 <input
@@ -111,10 +136,10 @@ const LoginPage = () => {
                   name="password"
                   type={showPassword ? 'text' : 'password'}
                   required
-                  value={formData.password}
-                  onChange={handleChange}
-                  className="block w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
-                  placeholder="Enter your password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="block w-full pl-10 pr-10 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white"
+                  placeholder="Password"
                 />
                 <button
                   type="button"
@@ -122,91 +147,58 @@ const LoginPage = () => {
                   className="absolute inset-y-0 right-0 pr-3 flex items-center"
                 >
                   {showPassword ? (
-                    <EyeSlashIcon className="h-5 w-5 text-gray-400 hover:text-gray-600" />
+                    <EyeSlashIcon className="h-5 w-5 text-gray-400" />
                   ) : (
-                    <EyeIcon className="h-5 w-5 text-gray-400 hover:text-gray-600" />
+                    <EyeIcon className="h-5 w-5 text-gray-400" />
                   )}
                 </button>
               </div>
             </div>
+          </div>
 
-            {/* Error Message */}
-            {error && (
-              <div className="flex items-center space-x-2 text-red-600 bg-red-50 p-3 rounded-lg">
-                <ExclamationCircleIcon className="h-5 w-5 flex-shrink-0" />
-                <span className="text-sm">{error}</span>
-              </div>
-            )}
-
-            {/* Submit Button */}
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 px-4 rounded-lg font-medium hover:from-blue-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
-            >
-              {loading ? (
-                <div className="flex items-center justify-center space-x-2">
-                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                  <span>Signing in...</span>
-                </div>
-              ) : (
-                'Sign In'
-              )}
-            </button>
-          </form>
-
-          {/* Divider */}
-          <div className="mt-8 pt-6 border-t border-gray-200">
-            <div className="text-center">
-              <span className="text-sm text-gray-600">
-                Don&apos;t have an account?{' '}
-                <Link href="/register" className="text-blue-600 hover:text-blue-500 font-medium">
-                  Register here
-                </Link>
-              </span>
+          {/* Error Message */}
+          {error && (
+            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
+              {error}
             </div>
-          </div>
-        </div>
+          )}
 
-        {/* Demo Credentials */}
-        <div className="mt-6 bg-white/10 backdrop-blur-sm rounded-xl p-6">
-          <h3 className="text-white font-medium mb-4 text-center">Demo Credentials</h3>
-          <div className="space-y-3">
-            {demoCredentials.map((cred, index) => (
-              <div 
-                key={index}
-                className="bg-white/10 rounded-lg p-3 cursor-pointer hover:bg-white/20 transition-colors"
-                onClick={() => {
-                  setFormData({
-                    username: cred.username,
-                    password: cred.password
-                  });
-                }}
-              >
-                <div className="flex justify-between items-center text-sm">
-                  <span className="text-blue-200 font-medium">{cred.role}</span>
-                  <span className="text-white">{cred.username} / {cred.password}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-          <p className="text-xs text-blue-300 text-center mt-3">
-            Click on any credential to auto-fill the form
-          </p>
-        </div>
-
-        {/* Back to Home */}
-        <div className="text-center mt-6">
-          <Link 
-            href="/" 
-            className="text-blue-300 hover:text-white transition-colors text-sm"
+          {/* Submit Button */}
+          <button
+            type="submit"
+            disabled={isLoading || !username || !password}
+            className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors duration-200"
           >
-            ← Back to Home
-          </Link>
+            {isLoading ? (
+              <div className="flex items-center">
+                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                Signing in...
+              </div>
+            ) : (
+              'Sign in'
+            )}
+          </button>
+
+          {/* Back to Home */}
+          <div className="text-center">
+            <Link
+              href="/"
+              className="text-emerald-600 hover:text-emerald-700 font-medium transition-colors duration-200"
+            >
+              ← Back to Home
+            </Link>
+          </div>
+        </form>
+
+        {/* Additional Info */}
+        <div className="text-center text-sm text-gray-600">
+          <p>
+            Public information is available without login.
+            <br />
+            Staff login required for administrative features.
+          </p>
         </div>
       </div>
     </div>
   );
-};
-
-export default LoginPage;
+}

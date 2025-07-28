@@ -1,12 +1,18 @@
-import GenericPage from '@/components/GenericPage';
-import { ClipboardDocumentListIcon } from '@heroicons/react/24/outline';
+'use client';
 
-export default function FinalsPerformancePage() {
+import Layout from '@/components/Layout';
+
+export default function FinalsPerformancesPage() {
   return (
-    <GenericPage
-      title="Finals - Performance List"
-      description="View all scheduled performances for the final round"
-      icon={ClipboardDocumentListIcon}
-    />
+    <Layout>
+      <div className="max-w-6xl mx-auto">
+        <h1 className="text-3xl font-bold text-charcoal mb-6">
+          Finals - Performance List
+        </h1>
+        <div className="bg-white rounded-lg shadow-lg p-8 min-h-96 flex items-center justify-center">
+          <p className="text-gray-500 text-lg">Content coming soon...</p>
+        </div>
+      </div>
+    </Layout>
   );
 }
