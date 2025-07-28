@@ -26,7 +26,7 @@ export default function Layout({ children }: LayoutProps) {
     <div className="min-h-screen bg-page-bg">
       <Sidebar />
       <main className="w-full lg:pl-4">
-        <div className="p-6 lg:p-8">
+        <div className="pt-16 px-6 pb-6 lg:p-8">
           {children}
         </div>
       </main>
