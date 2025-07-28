@@ -106,14 +106,14 @@ export default function HomePage() {
         {/* Event Details */}
         <div className="grid md:grid-cols-2 gap-6 mb-16">
           {eventDetails.map((detail, index) => (
-            <div key={index} className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
+            <div key={index} className="bg-card-bg rounded-xl shadow-lg p-6 border border-gray-100">
               <div className="flex items-center space-x-4">
-                <div className="p-3 bg-emerald-100 rounded-lg text-emerald-600">
+                <div className="p-3 bg-mint rounded-lg text-emerald-600">
                   {detail.icon}
                 </div>
                 <div>
                   <h3 className="font-semibold text-charcoal">{detail.label}</h3>
-                  <p className="text-gray-600">{detail.value}</p>
+                  <p className="text-charcoal-light">{detail.value}</p>
                 </div>
               </div>
             </div>
@@ -123,14 +123,14 @@ export default function HomePage() {
         {/* Features Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
           {features.map((feature, index) => (
-            <div key={index} className="bg-white rounded-xl shadow-lg p-6 border border-gray-100 text-center hover:shadow-xl transition-shadow duration-300">
+            <div key={index} className="bg-card-bg rounded-xl shadow-lg p-6 border border-gray-100 text-center hover:shadow-xl transition-shadow duration-300">
               <div className="mb-4 text-emerald-600 flex justify-center">
                 {feature.icon}
               </div>
               <h3 className="text-lg font-semibold text-charcoal mb-2">
                 {feature.title}
               </h3>
-              <p className="text-gray-600 text-sm">
+              <p className="text-charcoal-light text-sm">
                 {feature.description}
               </p>
             </div>

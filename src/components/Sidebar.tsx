@@ -12,7 +12,8 @@ import {
   UserIcon,
   TrophyIcon,
   MusicalNoteIcon,
-  ShieldCheckIcon
+  ShieldCheckIcon,
+  HomeIcon
 } from '@heroicons/react/24/outline';
 
 export default function Sidebar() {
@@ -23,6 +24,10 @@ export default function Sidebar() {
   // Define navigation items based on user role
   const getNavigationItems = (): NavItem[] => {
     const baseItems: NavItem[] = [
+      {
+        title: 'Home',
+        href: '/',
+      },
       {
         title: 'Auditions',
         href: '/auditions',
@@ -75,6 +80,8 @@ export default function Sidebar() {
 
   const getIcon = (title: string) => {
     switch (title) {
+      case 'Home':
+        return <HomeIcon className="w-5 h-5" />;
       case 'Auditions':
       case 'Finals':
         return <MusicalNoteIcon className="w-5 h-5" />;
@@ -121,20 +128,30 @@ export default function Sidebar() {
                 <li key={item.title}>
                   <div className="space-y-1">
                     {/* Parent item */}
-                    <button
-                      onClick={() => toggleExpanded(item.title)}
-                      className="w-full flex items-center justify-between px-3 py-2 rounded-lg hover:bg-emerald-500 transition-colors duration-200"
-                    >
-                      <div className="flex items-center space-x-3">
-                        {getIcon(item.title)}
-                        <span className="font-medium">{item.title}</span>
-                      </div>
-                      {item.children && (
-                        expandedItems.includes(item.title) ? 
+                    {item.children ? (
+                      <button
+                        onClick={() => toggleExpanded(item.title)}
+                        className="w-full flex items-center justify-between px-3 py-2 rounded-lg hover:bg-emerald-500 transition-colors duration-200"
+                      >
+                        <div className="flex items-center space-x-3">
+                          {getIcon(item.title)}
+                          <span className="font-medium">{item.title}</span>
+                        </div>
+                        {expandedItems.includes(item.title) ? 
                           <ChevronDownIcon className="w-4 h-4" /> : 
                           <ChevronRightIcon className="w-4 h-4" />
-                      )}
-                    </button>
+                        }
+                      </button>
+                    ) : (
+                      <Link
+                        href={item.href}
+                        className="w-full flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-emerald-500 transition-colors duration-200"
+                        onClick={() => setIsOpen(false)}
+                      >
+                        {getIcon(item.title)}
+                        <span className="font-medium">{item.title}</span>
+                      </Link>
+                    )}
 
                     {/* Child items */}
                     {item.children && expandedItems.includes(item.title) && (

@@ -13,7 +13,7 @@ export default function Layout({ children }: LayoutProps) {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-ivory">
+      <div className="flex items-center justify-center min-h-screen bg-page-bg">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600 mx-auto"></div>
           <p className="mt-4 text-charcoal">Loading...</p>
@@ -23,7 +23,7 @@ export default function Layout({ children }: LayoutProps) {
   }
 
   return (
-    <div className="flex h-screen bg-ivory">
+    <div className="flex h-screen bg-page-bg">
       <Sidebar />
       <main className="flex-1 overflow-y-auto lg:ml-0">
         <div className="p-6 lg:p-8">

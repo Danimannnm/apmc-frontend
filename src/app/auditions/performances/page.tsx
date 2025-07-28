@@ -9,8 +9,8 @@ export default function AuditionPerformancesPage() {
         <h1 className="text-3xl font-bold text-charcoal mb-6">
           Auditions - Performance List
         </h1>
-        <div className="bg-white rounded-lg shadow-lg p-8 min-h-96 flex items-center justify-center">
-          <p className="text-gray-500 text-lg">Content coming soon...</p>
+        <div className="bg-card-bg rounded-lg shadow-lg p-8 min-h-96 flex items-center justify-center">
+          <p className="text-charcoal-light text-lg">Content coming soon...</p>
         </div>
       </div>
     </Layout>

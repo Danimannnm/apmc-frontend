@@ -2,13 +2,27 @@
 
 /* Pakistani Traditional Music Conference Color Palette */
 :root {
-  --primary-emerald: #046A38;
-  --secondary-saffron: #F4C95D;
+  /* backgrounds */
+  --bg-page: #FFFFFF;
+  --bg-card: #F8F6F0;
+
+  /* text */
+  --text-primary: #222222;
+  --text-secondary: #333333;
+
+  /* accents */
+  --accent-mint: #B1E7D6;
+  --accent-green: #046A38;
+  --accent-gold: #F4C95D;
   --accent-maroon: #8B0000;
   --accent-indigo: #264653;
-  --neutral-light: #F8F6F0;
-  --neutral-dark: #333333;
   --highlight-orange: #E07A5F;
+  
+  /* Legacy variables for compatibility */
+  --primary-emerald: #046A38;
+  --secondary-saffron: #F4C95D;
+  --neutral-light: #F8F6F0;
+  --neutral-dark: #222222;
 }
 
 /* Base styles */
@@ -17,8 +31,8 @@ html {
 }
 
 body {
-  background-color: var(--neutral-light);
-  color: var(--neutral-dark);
+  background-color: var(--bg-page);
+  color: var(--text-primary);
   line-height: 1.6;
 }
 
