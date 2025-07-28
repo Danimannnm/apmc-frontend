@@ -32,6 +32,22 @@ const config: Config = {
       },
       backgroundImage: {
         'gradient-primary': 'linear-gradient(135deg, #046A38 0%, #264653 100%)',
+        'pattern-main': "url('/patterns/main-pattern.svg')",
+        'pattern-sidebar': "url('/patterns/sidebar-pattern.svg')",
+      },
+      backgroundSize: {
+        'pattern': '400px 400px',
+        'pattern-small': '100px 100px',
+      },
+      opacity: {
+        '1': '0.01',
+        '2': '0.02',
+        '3': '0.03',
+        '4': '0.04',
+        '5': '0.05',
+        '6': '0.06',
+        '12': '0.12',
+        '15': '0.15',
       },
     },
   },

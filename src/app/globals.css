@@ -13,14 +13,14 @@
   /* accents */
   --accent-mint: #B1E7D6;
   --accent-green: #046A38;
-  --accent-gold: #F4C95D;
+  --accent-gold: #e7ddc3;
   --accent-maroon: #8B0000;
   --accent-indigo: #264653;
   --highlight-orange: #E07A5F;
   
   /* Legacy variables for compatibility */
   --primary-emerald: #046A38;
-  --secondary-saffron: #F4C95D;
+  --secondary-saffron: #f8d273;
   --neutral-light: #F8F6F0;
   --neutral-dark: #222222;
 }
@@ -34,6 +34,25 @@ body {
   background-color: var(--bg-page);
   color: var(--text-primary);
   line-height: 1.6;
+  /* Performance optimizations */
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Performance optimizations for smoother animations */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+.will-change-transform {
+  will-change: transform;
+}
+
+.gpu-acceleration {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -61,9 +80,9 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Pattern backgrounds */
 .bg-pattern-main {
-  background-image: url('/patterns/main-pattern.png');
+  background-image: url('/patterns/main-pattern.svg');
   background-repeat: repeat;
-  background-size: 300px 300px;
+  background-size: 200px 200px;
 }
 
 .bg-sidebar {

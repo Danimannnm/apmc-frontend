@@ -12,44 +12,45 @@ import {
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 
+// Move static data outside component to prevent re-creation on each render
+const features = [
+  {
+    icon: <MusicalNoteIcon className="w-8 h-8" />,
+    title: "Traditional Music",
+    description: "Celebrating the rich heritage of Pakistani classical and folk music"
+  },
+  {
+    icon: <TrophyIcon className="w-8 h-8" />,
+    title: "Competition",
+    description: "Multi-stage competition from auditions to grand finals"
+  },
+  {
+    icon: <UserGroupIcon className="w-8 h-8" />,
+    title: "Expert Judges",
+    description: "Renowned musicians and scholars evaluating performances"
+  },
+  {
+    icon: <StarIcon className="w-8 h-8" />,
+    title: "Cultural Excellence",
+    description: "Promoting and preserving Pakistan's musical traditions"
+  }
+];
+
+const eventDetails = [
+  {
+    icon: <CalendarDaysIcon className="w-6 h-6" />,
+    label: "Event Dates",
+    value: "March 15-20, 2025"
+  },
+  {
+    icon: <MapPinIcon className="w-6 h-6" />,
+    label: "Venue",
+    value: "National Academy of Performing Arts, Karachi"
+  }
+];
+
 export default function HomePage() {
   const { user } = useAuth();
-
-  const features = [
-    {
-      icon: <MusicalNoteIcon className="w-8 h-8" />,
-      title: "Traditional Music",
-      description: "Celebrating the rich heritage of Pakistani classical and folk music"
-    },
-    {
-      icon: <TrophyIcon className="w-8 h-8" />,
-      title: "Competition",
-      description: "Multi-stage competition from auditions to grand finals"
-    },
-    {
-      icon: <UserGroupIcon className="w-8 h-8" />,
-      title: "Expert Judges",
-      description: "Renowned musicians and scholars evaluating performances"
-    },
-    {
-      icon: <StarIcon className="w-8 h-8" />,
-      title: "Cultural Excellence",
-      description: "Promoting and preserving Pakistan's musical traditions"
-    }
-  ];
-
-  const eventDetails = [
-    {
-      icon: <CalendarDaysIcon className="w-6 h-6" />,
-      label: "Event Dates",
-      value: "March 15-20, 2025"
-    },
-    {
-      icon: <MapPinIcon className="w-6 h-6" />,
-      label: "Venue",
-      value: "National Academy of Performing Arts, Karachi"
-    }
-  ];
 
   return (
     <Layout>
