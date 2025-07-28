@@ -66,11 +66,8 @@ h1, h2, h3, h4, h5, h6 {
   background-size: 300px 300px;
 }
 
-.bg-pattern-sidebar {
-  background-image: url('/patterns/sidebar-pattern.png');
-  background-repeat: repeat;
-  background-size: 200px 200px;
-  background-attachment: fixed;
+.bg-sidebar {
+  background-color: var(--accent-green);
 }
 
 /* You can use SVG format with the same classes */
@@ -91,25 +88,5 @@ h1, h2, h3, h4, h5, h6 {
   background-size: 500px 500px; /* Larger pattern to make it less busy */
   background-attachment: fixed; /* Prevents the pattern from scrolling */
   opacity: 0.1; /* Very subtle pattern - adjust as needed */
-  z-index: 0;
-}
-
-.bg-pattern-sidebar-svg {
-  position: relative;
-  background-color: var(--accent-green, #046A38); /* Solid green background base */
-}
-
-.bg-pattern-sidebar-svg::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: url('/patterns/sidebar-pattern.svg');
-  background-repeat: repeat;
-  background-size: 200px 200px;
-  background-attachment: fixed;
-  opacity: 0.2; /* Adjust this value to control pattern visibility (lower = more subtle) */
   z-index: 0;
 }
