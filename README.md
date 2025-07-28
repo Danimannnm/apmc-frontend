@@ -9,7 +9,7 @@ A modern, responsive web application for the All Pakistan Music Conference built
 - **📱 Mobile-First Design**: Responsive design optimized for all devices
 - **🎨 Pakistani Cultural Design**: Colors and design inspired by Pakistani traditional aesthetics
 - **⚡ Modern Tech Stack**: Built with the latest Next.js, TypeScript, and Tailwind CSS
-- **📲 Collapsible Sidebar**: Desktop and mobile responsive navigation with collapse functionality
+- **📲 Clean Sidebar**: Opens by default on desktop, no overlay dimming - full background visibility
 - **🔒 Secure Navigation**: Judge-only sections hidden until proper authentication
 
 ## Demo Credentials
