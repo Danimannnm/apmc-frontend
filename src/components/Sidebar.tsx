@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
 import { UserRole, NavItem } from '@/types';
@@ -20,24 +20,6 @@ export default function Sidebar() {
   const [isOpen, setIsOpen] = useState(false);
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
   const { user, logout } = useAuth();
-
-  // Open sidebar by default on desktop
-  useEffect(() => {
-    const checkScreenSize = () => {
-      if (window.innerWidth >= 1024) { // lg breakpoint
-        setIsOpen(true);
-      } else {
-        setIsOpen(false);
-      }
-    };
-
-    // Check on mount
-    checkScreenSize();
-
-    // Check on resize
-    window.addEventListener('resize', checkScreenSize);
-    return () => window.removeEventListener('resize', checkScreenSize);
-  }, []);
 
   // Define navigation items based on user role
   const getNavigationItems = (): NavItem[] => {
@@ -118,7 +100,7 @@ export default function Sidebar() {
       {/* Menu toggle button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed top-4 left-4 z-50 p-2 rounded-md bg-emerald-600 text-white shadow-lg hover:bg-emerald-700 transition-colors"
+        className="fixed top-4 left-4 z-50 p-2 rounded-md bg-emerald-600 text-white hover:bg-emerald-700 transition-colors"
       >
         {isOpen ? <XMarkIcon className="w-6 h-6" /> : <Bars3Icon className="w-6 h-6" />}
       </button>
