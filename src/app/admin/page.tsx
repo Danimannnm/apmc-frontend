@@ -88,24 +88,24 @@ const AdminPage = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
+    <div className="min-h-screen">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-8">
           <div className="flex items-center space-x-4 mb-4">
-            <div className="bg-gradient-to-r from-purple-600 to-blue-600 rounded-lg p-3">
-              <ShieldCheckIcon className="h-8 w-8 text-white" />
+            <div className="bg-gradient-to-r from-purple-600 to-blue-600 rounded-xl p-3">
+              <ShieldCheckIcon className="h-7 w-7 text-white" />
             </div>
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">Admin Dashboard</h1>
-              <p className="text-gray-600">Welcome back, {user?.name}</p>
+              <h1 className="text-3xl md:text-4xl font-bold text-gray-900">Admin Dashboard</h1>
+              <p className="text-gray-600 text-lg">Welcome back, {user?.name}</p>
             </div>
           </div>
           
           {/* Stats Overview */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             {stats.map((stat, index) => (
-              <div key={index} className="bg-white rounded-lg shadow-sm p-6 border border-gray-200">
+              <div key={index} className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-sm font-medium text-gray-600">{stat.label}</p>
@@ -128,10 +128,10 @@ const AdminPage = () => {
               {adminSections.map((section, index) => (
                 <div 
                   key={index}
-                  className="bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 p-6 border border-gray-200 cursor-pointer group"
+                  className="bg-white rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 p-6 border border-gray-100 cursor-pointer group"
                 >
                   <div className="flex items-center space-x-4 mb-4">
-                    <div className={`${section.color} rounded-lg p-3 group-hover:scale-110 transition-transform duration-300`}>
+                    <div className={`${section.color} rounded-xl p-3 group-hover:scale-110 transition-transform duration-300`}>
                       <section.icon className="h-6 w-6 text-white" />
                     </div>
                     <div className="flex-1">
@@ -159,10 +159,10 @@ const AdminPage = () => {
           {/* Recent Activity Sidebar */}
           <div className="lg:col-span-1">
             <h2 className="text-2xl font-bold text-gray-900 mb-6">Recent Activity</h2>
-            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
               <div className="space-y-4">
                 {recentActivity.map((activity, index) => (
-                  <div key={index} className="flex items-start space-x-3 p-3 hover:bg-gray-50 rounded-lg transition-colors">
+                  <div key={index} className="flex items-start space-x-3 p-3 hover:bg-gray-50 rounded-xl transition-colors">
                     <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
                       activity.type === 'user' ? 'bg-blue-100' :
                       activity.type === 'result' ? 'bg-green-100' :
@@ -191,19 +191,19 @@ const AdminPage = () => {
             </div>
 
             {/* Quick Actions */}
-            <div className="mt-6 bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <div className="mt-6 bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
               <h3 className="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h3>
               <div className="space-y-3">
-                <button className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium">
+                <button className="w-full bg-blue-600 text-white py-2.5 px-4 rounded-xl hover:bg-blue-700 transition-colors text-sm font-medium">
                   Add New Judge
                 </button>
-                <button className="w-full bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition-colors text-sm font-medium">
+                <button className="w-full bg-green-600 text-white py-2.5 px-4 rounded-xl hover:bg-green-700 transition-colors text-sm font-medium">
                   Publish Results
                 </button>
-                <button className="w-full bg-purple-600 text-white py-2 px-4 rounded-lg hover:bg-purple-700 transition-colors text-sm font-medium">
+                <button className="w-full bg-purple-600 text-white py-2.5 px-4 rounded-xl hover:bg-purple-700 transition-colors text-sm font-medium">
                   Send Announcement
                 </button>
-                <button className="w-full bg-gray-600 text-white py-2 px-4 rounded-lg hover:bg-gray-700 transition-colors text-sm font-medium">
+                <button className="w-full bg-gray-600 text-white py-2.5 px-4 rounded-xl hover:bg-gray-700 transition-colors text-sm font-medium">
                   Generate Report
                 </button>
               </div>

@@ -23,11 +23,13 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.variable} font-sans antialiased bg-gray-50`}>
         <AuthProvider>
-          <div className="flex h-screen">
+          <div className="flex min-h-screen">
             <Sidebar />
-            <main className="flex-1 lg:ml-0 ml-0 overflow-auto">
-              <div className="lg:ml-64">
-                {children}
+            <main className="flex-1 w-full">
+              <div className="lg:pl-64">
+                <div className="p-4 lg:p-8">
+                  {children}
+                </div>
               </div>
             </main>
           </div>

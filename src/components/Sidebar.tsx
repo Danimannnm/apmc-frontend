@@ -4,10 +4,21 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/contexts/AuthContext';
 import { ChevronDownIcon, ChevronRightIcon, Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
+import { 
+  HomeIcon,
+  MicrophoneIcon,
+  TrophyIcon,
+  UserGroupIcon,
+  ClipboardDocumentListIcon,
+  ChartBarIcon,
+  Cog6ToothIcon,
+  ArrowRightOnRectangleIcon
+} from '@heroicons/react/24/outline';
 
 interface MenuItem {
   title: string;
   href?: string;
+  icon?: React.ComponentType<{ className?: string }>;
   children?: MenuItem[];
   requiresRole?: 'admin' | 'judge';
 }
@@ -16,26 +27,30 @@ const menuItems: MenuItem[] = [
   {
     title: 'Home',
     href: '/',
+    icon: HomeIcon,
   },
   {
     title: 'Auditions',
+    icon: MicrophoneIcon,
     children: [
-      { title: 'Performance List', href: '/auditions/performances' },
-      { title: 'Judges', href: '/auditions/judges', requiresRole: 'judge' },
-      { title: 'Results', href: '/auditions/results' },
+      { title: 'Performance List', href: '/auditions/performances', icon: ClipboardDocumentListIcon },
+      { title: 'Judges', href: '/auditions/judges', icon: UserGroupIcon, requiresRole: 'judge' },
+      { title: 'Results', href: '/auditions/results', icon: ChartBarIcon },
     ],
   },
   {
     title: 'Finals',
+    icon: TrophyIcon,
     children: [
-      { title: 'Performance List', href: '/finals/performances' },
-      { title: 'Judges', href: '/finals/judges', requiresRole: 'judge' },
-      { title: 'Results', href: '/finals/results' },
+      { title: 'Performance List', href: '/finals/performances', icon: ClipboardDocumentListIcon },
+      { title: 'Judges', href: '/finals/judges', icon: UserGroupIcon, requiresRole: 'judge' },
+      { title: 'Results', href: '/finals/results', icon: ChartBarIcon },
     ],
   },
   {
     title: 'Admin',
     href: '/admin',
+    icon: Cog6ToothIcon,
     requiresRole: 'admin',
   },
 ];
@@ -43,7 +58,7 @@ const menuItems: MenuItem[] = [
 export default function Sidebar() {
   const { user, logout } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
-  const [expandedItems, setExpandedItems] = useState<string[]>([]);
+  const [expandedItems, setExpandedItems] = useState<string[]>(['Auditions', 'Finals']);
 
   const toggleExpanded = (title: string) => {
     setExpandedItems(prev =>
@@ -65,37 +80,46 @@ export default function Sidebar() {
 
     const hasChildren = item.children && item.children.length > 0;
     const isExpanded = expandedItems.includes(item.title);
+    const IconComponent = item.icon;
 
     return (
-      <div key={item.title}>
+      <div key={item.title} className="w-full">
         {hasChildren ? (
           <button
             onClick={() => toggleExpanded(item.title)}
-            className={`w-full flex items-center justify-between px-4 py-3 text-left hover:bg-blue-50 transition-colors ${
-              level > 0 ? 'pl-8 text-sm' : 'text-base font-medium'
+            className={`w-full flex items-center justify-between px-3 py-2.5 text-left rounded-lg transition-all duration-200 group ${
+              level > 0 
+                ? 'text-gray-600 hover:text-gray-900 hover:bg-gray-100 text-sm ml-4' 
+                : 'text-gray-700 hover:text-gray-900 hover:bg-gray-100 font-medium'
             }`}
           >
-            <span>{item.title}</span>
+            <div className="flex items-center space-x-3">
+              {IconComponent && <IconComponent className={`${level > 0 ? 'h-4 w-4' : 'h-5 w-5'}`} />}
+              <span>{item.title}</span>
+            </div>
             {isExpanded ? (
-              <ChevronDownIcon className="h-4 w-4" />
+              <ChevronDownIcon className="h-4 w-4 transition-transform duration-200" />
             ) : (
-              <ChevronRightIcon className="h-4 w-4" />
+              <ChevronRightIcon className="h-4 w-4 transition-transform duration-200" />
             )}
           </button>
         ) : (
           <Link
             href={item.href || '#'}
             onClick={() => setIsOpen(false)}
-            className={`block px-4 py-3 hover:bg-blue-50 transition-colors ${
-              level > 0 ? 'pl-8 text-sm' : 'text-base font-medium'
+            className={`flex items-center space-x-3 px-3 py-2.5 rounded-lg transition-all duration-200 group ${
+              level > 0 
+                ? 'text-gray-600 hover:text-gray-900 hover:bg-gray-100 text-sm ml-4' 
+                : 'text-gray-700 hover:text-gray-900 hover:bg-gray-100 font-medium'
             }`}
           >
-            {item.title}
+            {IconComponent && <IconComponent className={`${level > 0 ? 'h-4 w-4' : 'h-5 w-5'}`} />}
+            <span>{item.title}</span>
           </Link>
         )}
         
         {hasChildren && isExpanded && (
-          <div className="bg-gray-50">
+          <div className="mt-1 space-y-1">
             {item.children?.map(child => renderMenuItem(child, level + 1))}
           </div>
         )}
@@ -107,13 +131,13 @@ export default function Sidebar() {
     <>
       {/* Mobile menu button */}
       <button
-        className="lg:hidden fixed top-4 left-4 z-50 p-2 bg-white rounded-md shadow-md"
+        className="lg:hidden fixed top-4 left-4 z-50 p-2 bg-white rounded-lg shadow-lg border border-gray-200"
         onClick={() => setIsOpen(!isOpen)}
       >
         {isOpen ? (
-          <XMarkIcon className="h-6 w-6" />
+          <XMarkIcon className="h-6 w-6 text-gray-600" />
         ) : (
-          <Bars3Icon className="h-6 w-6" />
+          <Bars3Icon className="h-6 w-6 text-gray-600" />
         )}
       </button>
 
@@ -127,52 +151,62 @@ export default function Sidebar() {
 
       {/* Sidebar */}
       <div
-        className={`fixed top-0 left-0 h-full w-80 bg-white shadow-lg transform transition-transform duration-300 ease-in-out z-40 ${
+        className={`fixed top-0 left-0 h-full w-64 bg-white border-r border-gray-200 transform transition-transform duration-300 ease-in-out z-40 ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
-        } lg:translate-x-0 lg:static lg:shadow-none`}
+        } lg:translate-x-0`}
       >
-        <div className="p-6 border-b border-gray-200">
-          <h1 className="text-2xl font-bold text-blue-900">APMC</h1>
-          <p className="text-sm text-gray-600">All Pakistan Music Conference</p>
-        </div>
-
-        <nav className="flex-1 overflow-y-auto">
-          {menuItems.map(item => renderMenuItem(item))}
-        </nav>
-
-        {/* User info and logout */}
-        <div className="border-t border-gray-200 p-4">
-          {user ? (
-            <div className="space-y-3">
-              <div className="text-sm">
-                <p className="font-medium">{user.name}</p>
-                <p className="text-gray-500 capitalize">{user.role}</p>
+        <div className="flex flex-col h-full">
+          {/* Header */}
+          <div className="flex items-center justify-between p-6 border-b border-gray-200">
+            <div className="flex items-center space-x-3">
+              <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
+                <span className="text-white font-bold text-sm">A</span>
               </div>
-              <button
-                onClick={logout}
-                className="w-full px-4 py-2 text-sm bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors"
-              >
-                Logout
-              </button>
+              <div>
+                <h1 className="text-lg font-bold text-gray-900">APMC</h1>
+                <p className="text-xs text-gray-500">Music Conference</p>
+              </div>
             </div>
-          ) : (
-            <div className="space-y-2">
+          </div>
+
+          {/* Navigation */}
+          <nav className="flex-1 p-4 space-y-2 overflow-y-auto">
+            {menuItems.map(item => renderMenuItem(item))}
+          </nav>
+
+          {/* User section */}
+          <div className="p-4 border-t border-gray-200">
+            {user ? (
+              <div className="space-y-3">
+                <div className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
+                  <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                    <span className="text-blue-600 font-medium text-sm">
+                      {user.name.charAt(0).toUpperCase()}
+                    </span>
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-medium text-gray-900 truncate">{user.name}</p>
+                    <p className="text-xs text-gray-500 capitalize">{user.role}</p>
+                  </div>
+                </div>
+                <button
+                  onClick={logout}
+                  className="w-full flex items-center justify-center space-x-2 p-2 text-sm text-red-600 hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors"
+                >
+                  <ArrowRightOnRectangleIcon className="h-4 w-4" />
+                  <span>Logout</span>
+                </button>
+              </div>
+            ) : (
               <Link
                 href="/login"
                 onClick={() => setIsOpen(false)}
-                className="block w-full px-4 py-2 text-sm text-center bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+                className="w-full flex items-center justify-center space-x-2 p-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors font-medium"
               >
-                Login
+                <span>Login</span>
               </Link>
-              <Link
-                href="/register"
-                onClick={() => setIsOpen(false)}
-                className="block w-full px-4 py-2 text-sm text-center border border-blue-600 text-blue-600 rounded-md hover:bg-blue-50 transition-colors"
-              >
-                Register
-              </Link>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </div>
     </>

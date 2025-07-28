@@ -89,23 +89,23 @@ const AuditionsPerformancePage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
+    <div className="min-h-screen">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-8">
           <div className="flex items-center space-x-4 mb-6">
-            <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg p-3">
-              <ClipboardDocumentListIcon className="h-8 w-8 text-white" />
+            <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl p-3">
+              <ClipboardDocumentListIcon className="h-7 w-7 text-white" />
             </div>
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">Auditions - Performance List</h1>
-              <p className="text-gray-600">View all scheduled performances for the audition round</p>
+              <h1 className="text-3xl md:text-4xl font-bold text-gray-900">Auditions - Performance List</h1>
+              <p className="text-gray-600 text-lg">View all scheduled performances for the audition round</p>
             </div>
           </div>
 
           {/* Stats */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-            <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-200">
+            <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm font-medium text-gray-600">Total Performances</p>
@@ -114,7 +114,7 @@ const AuditionsPerformancePage = () => {
                 <ClipboardDocumentListIcon className="h-8 w-8 text-blue-600" />
               </div>
             </div>
-            <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-200">
+            <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm font-medium text-gray-600">Completed</p>
@@ -125,7 +125,7 @@ const AuditionsPerformancePage = () => {
                 <ClockIcon className="h-8 w-8 text-green-600" />
               </div>
             </div>
-            <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-200">
+            <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm font-medium text-gray-600">In Progress</p>
@@ -136,7 +136,7 @@ const AuditionsPerformancePage = () => {
                 <UserIcon className="h-8 w-8 text-blue-600" />
               </div>
             </div>
-            <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-200">
+            <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm font-medium text-gray-600">Scheduled</p>
@@ -151,7 +151,7 @@ const AuditionsPerformancePage = () => {
         </div>
 
         {/* Performance List */}
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden mb-8">
           <div className="px-6 py-4 bg-gray-50 border-b border-gray-200">
             <h2 className="text-lg font-semibold text-gray-900">Today&apos;s Schedule</h2>
           </div>
@@ -235,42 +235,42 @@ const AuditionsPerformancePage = () => {
         </div>
 
         {/* Additional Information */}
-        <div className="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Performance Guidelines</h3>
-            <div className="space-y-3 text-sm text-gray-600">
-              <div className="flex items-start space-x-2">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
+            <h3 className="text-xl font-semibold text-gray-900 mb-6">Performance Guidelines</h3>
+            <div className="space-y-4 text-sm text-gray-600">
+              <div className="flex items-start space-x-3">
                 <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
                 <span>Contestants must arrive 30 minutes before their scheduled time</span>
               </div>
-              <div className="flex items-start space-x-2">
+              <div className="flex items-start space-x-3">
                 <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
                 <span>Performance duration: Maximum 10 minutes</span>
               </div>
-              <div className="flex items-start space-x-2">
+              <div className="flex items-start space-x-3">
                 <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
                 <span>Accompaniment instruments will be provided</span>
               </div>
-              <div className="flex items-start space-x-2">
+              <div className="flex items-start space-x-3">
                 <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
                 <span>Recording equipment available in all venues</span>
               </div>
             </div>
           </div>
 
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Venue Information</h3>
-            <div className="space-y-4">
-              <div className="border-l-4 border-blue-500 pl-4">
-                <h4 className="font-medium text-gray-900">Hall A</h4>
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
+            <h3 className="text-xl font-semibold text-gray-900 mb-6">Venue Information</h3>
+            <div className="space-y-6">
+              <div className="border-l-4 border-blue-500 pl-6">
+                <h4 className="font-semibold text-gray-900 mb-1">Hall A</h4>
                 <p className="text-sm text-gray-600">Main auditorium - Capacity: 200 | Classical performances</p>
               </div>
-              <div className="border-l-4 border-green-500 pl-4">
-                <h4 className="font-medium text-gray-900">Hall B</h4>
+              <div className="border-l-4 border-green-500 pl-6">
+                <h4 className="font-semibold text-gray-900 mb-1">Hall B</h4>
                 <p className="text-sm text-gray-600">Contemporary hall - Capacity: 150 | Modern & fusion</p>
               </div>
-              <div className="border-l-4 border-orange-500 pl-4">
-                <h4 className="font-medium text-gray-900">Hall C</h4>
+              <div className="border-l-4 border-orange-500 pl-6">
+                <h4 className="font-semibold text-gray-900 mb-1">Hall C</h4>
                 <p className="text-sm text-gray-600">Traditional space - Capacity: 100 | Folk & Qawwali</p>
               </div>
             </div>
