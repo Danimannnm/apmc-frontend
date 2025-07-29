@@ -139,11 +139,11 @@ export default function HomePage() {
         </div>
 
         {/* About Section */}
-        <div className="bg-gradient-primary rounded-2xl p-8 md:p-12 text-white text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">
+        <div className="bg-card-bg rounded-2xl p-8 md:p-12 text-center border border-gray-100">
+          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-emerald-600">
             About APMC
           </h2>
-          <p className="text-lg md:text-xl text-emerald-100 max-w-4xl mx-auto leading-relaxed">
+          <p className="text-lg md:text-xl text-charcoal max-w-4xl mx-auto leading-relaxed">
             The All Pakistan Music Conference is the premier platform for celebrating and preserving 
             the rich tradition of Pakistani classical and folk music. Our annual conference brings 
             together talented musicians from across the nation to compete, perform, and share their 
@@ -152,15 +152,15 @@ export default function HomePage() {
           <div className="mt-8 grid md:grid-cols-3 gap-6 text-center">
             <div>
               <div className="text-3xl font-bold text-saffron">50+</div>
-              <div className="text-emerald-100">Participants</div>
+              <div className="text-charcoal">Participants</div>
             </div>
             <div>
               <div className="text-3xl font-bold text-saffron">15+</div>
-              <div className="text-emerald-100">Expert Judges</div>
+              <div className="text-charcoal">Expert Judges</div>
             </div>
             <div>
               <div className="text-3xl font-bold text-saffron">6</div>
-              <div className="text-emerald-100">Days of Music</div>
+              <div className="text-charcoal">Days of Music</div>
             </div>
           </div>
         </div>

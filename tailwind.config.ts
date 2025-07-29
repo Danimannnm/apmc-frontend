@@ -10,22 +10,23 @@ const config: Config = {
     extend: {
       colors: {
         'emerald': {
-          600: '#046A38',
+          600: 'var(--accent-green)',
           700: '#035530',
+          100: '#D1FAE5', // Light green for better visibility
         },
-        'saffron': '#F4C95D',
-        'maroon': '#8B0000',
+        'saffron': 'var(--secondary-saffron)',
+        'maroon': 'var(--accent-maroon)',
         'indigo': {
-          600: '#264653',
+          600: 'var(--accent-indigo)',
           700: '#1e3940',
         },
         'ivory': '#F8F6F0',
-        'charcoal': '#222222',
-        'charcoal-light': '#333333',
-        'burnt-orange': '#E07A5F',
-        'mint': '#B1E7D6',
-        'page-bg': '#FFFFFF',
-        'card-bg': '#F8F6F0',
+        'charcoal': 'var(--text-primary)',
+        'charcoal-light': 'var(--text-secondary)',
+        'burnt-orange': 'var(--highlight-orange)',
+        'mint': 'var(--accent-mint)',
+        'page-bg': 'var(--bg-page)',
+        'card-bg': 'var(--bg-card)',
       },
       fontFamily: {
         'sans': ['Inter', 'system-ui', 'sans-serif'],
