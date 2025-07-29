@@ -151,15 +151,15 @@ export default function HomePage() {
           </p>
           <div className="mt-8 grid md:grid-cols-3 gap-6 text-center">
             <div>
-              <div className="text-3xl font-bold text-saffron">50+</div>
+              <div className="text-3xl font-bold" style={{ color: 'var(--secondary-saffron)' }}>50+</div>
               <div className="text-charcoal">Participants</div>
             </div>
             <div>
-              <div className="text-3xl font-bold text-saffron">15+</div>
+              <div className="text-3xl font-bold" style={{ color: 'var(--secondary-saffron)' }}>15+</div>
               <div className="text-charcoal">Expert Judges</div>
             </div>
             <div>
-              <div className="text-3xl font-bold text-saffron">6</div>
+              <div className="text-3xl font-bold" style={{ color: 'var(--secondary-saffron)' }}>6</div>
               <div className="text-charcoal">Days of Music</div>
             </div>
           </div>

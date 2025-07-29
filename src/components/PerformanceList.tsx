@@ -158,7 +158,7 @@ export default function PerformanceList({
           <div className="text-charcoal-light text-sm">Completed</div>
         </div>
         <div className="bg-card-bg rounded-lg p-4 border border-gray-100 text-center">
-          <div className="text-2xl font-bold text-saffron">
+          <div className="text-2xl font-bold" style={{ color: 'var(--secondary-saffron)' }}>
             {performers.filter(p => !p.completed).length}
           </div>
           <div className="text-charcoal-light text-sm">Remaining</div>

@@ -15,6 +15,11 @@ const config: Config = {
           100: '#D1FAE5', // Light green for better visibility
         },
         'saffron': 'var(--secondary-saffron)',
+        'saffron-shades': {
+          600: 'var(--secondary-saffron)',
+          500: 'var(--secondary-saffron)',
+        },
+        'saffron-text': 'var(--secondary-saffron)',
         'maroon': 'var(--accent-maroon)',
         'indigo': {
           600: 'var(--accent-indigo)',
