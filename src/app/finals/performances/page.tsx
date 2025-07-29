@@ -1,18 +1,97 @@
 'use client';
 
+import { useState } from 'react';
 import Layout from '@/components/Layout';
+import PerformanceList, { Performer } from '@/components/PerformanceList';
+
+// Hardcoded finals data - these are the performers who qualified from auditions
+const initialFinalsData: Performer[] = [
+  {
+    id: 1,
+    name: "Ayleen Ovais",
+    group: "Under 10",
+    category: "Folk",
+    institution: "LGS Islamabad",
+    completed: false
+  },
+  {
+    id: 2,
+    name: "Sara Khan",
+    group: "Under 15",
+    category: "Folk",
+    institution: "City School Lahore",
+    completed: true
+  },
+  {
+    id: 3,
+    name: "Muhammad Ali",
+    group: "Under 20",
+    category: "Classical",
+    institution: "Aitchison College",
+    completed: false
+  },
+  {
+    id: 4,
+    name: "Zain Malik",
+    group: "Adult",
+    category: "Folk",
+    institution: "University of Punjab",
+    completed: true
+  },
+  {
+    id: 5,
+    name: "Aisha Bhatti",
+    group: "Adult",
+    category: "Classical",
+    institution: "National College of Arts",
+    completed: false
+  },
+  {
+    id: 6,
+    name: "Amina Tariq",
+    group: "Under 15",
+    category: "Semi-Classical",
+    institution: "Beaconhouse School",
+    completed: false
+  },
+  {
+    id: 7,
+    name: "Omar Farooq",
+    group: "Under 20",
+    category: "Qawwali",
+    institution: "Government College University",
+    completed: true
+  },
+  {
+    id: 8,
+    name: "Mariam Siddique",
+    group: "Adult",
+    category: "Folk",
+    institution: "LUMS",
+    completed: false
+  }
+];
 
 export default function FinalsPerformancesPage() {
+  const [performers, setPerformers] = useState<Performer[]>(initialFinalsData);
+
+  const handlePerformerComplete = (id: number, completed: boolean) => {
+    setPerformers(prev => 
+      prev.map(performer => 
+        performer.id === id 
+          ? { ...performer, completed }
+          : performer
+      )
+    );
+  };
+
   return (
     <Layout>
-      <div className="max-w-6xl mx-auto">
-        <h1 className="text-3xl font-bold text-charcoal mb-6">
-          Finals - Performance List
-        </h1>
-        <div className="bg-card-bg rounded-lg shadow-lg p-8 min-h-96 flex items-center justify-center">
-          <p className="text-charcoal-light text-lg">Content coming soon...</p>
-        </div>
-      </div>
+      <PerformanceList 
+        performers={performers}
+        title="Finals - Performance List"
+        onPerformerComplete={handlePerformerComplete}
+      />
     </Layout>
   );
 }
