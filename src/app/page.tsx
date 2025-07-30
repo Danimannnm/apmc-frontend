@@ -144,7 +144,7 @@ export default function HomePage() {
             About APMC
           </h2>
           <p className="text-lg md:text-xl text-charcoal max-w-4xl mx-auto leading-relaxed">
-            The All Pakistan Music Conference is the premier platform for celebrating and preserving 
+            Testing Commit Update The All Pakistan Music Conference is the premier platform for celebrating and preserving 
             the rich tradition of Pakistani classical and folk music. Our annual conference brings 
             together talented musicians from across the nation to compete, perform, and share their 
             artistic heritage with audiences worldwide.
