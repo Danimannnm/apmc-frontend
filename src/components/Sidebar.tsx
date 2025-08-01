@@ -107,7 +107,7 @@ export default function Sidebar() {
 
       {/* Sidebar */}
       <div className={`
-        fixed inset-y-0 left-0 z-40 w-64 bg-emerald-600 text-white transform transition-transform duration-300 ease-in-out
+        fixed inset-y-0 left-0 z-40 w-64 bg-emerald-600 text-white transform transition-transform duration-300 ease-in-out rounded-r-2xl
         bg-pattern-sidebar-svg ${isOpen ? 'translate-x-0' : '-translate-x-full'}
       `}>
         <div className="flex flex-col h-full">
