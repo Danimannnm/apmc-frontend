@@ -29,3 +29,41 @@ export interface AuthContextType {
   logout: () => void;
   isLoading: boolean;
 }
+
+// Performance and Scoring interfaces
+export interface Performer {
+  id: number;
+  name: string;
+  group: string;
+  category: string;
+  institution: string;
+  completed: boolean;
+  hasPerformed?: boolean;
+  isCurrentlyJudging?: boolean;
+  remarks?: string;
+}
+
+export interface ScoreCriterion {
+  id: string;
+  name: string;
+  maxPoints: number;
+  description?: string;
+}
+
+export interface Score {
+  criterionId: string;
+  points: number;
+}
+
+export interface PerformanceScore {
+  performerId: number;
+  judgeId: string;
+  scores: Score[];
+  totalScore: number;
+  submittedAt?: Date;
+}
+
+// Scoring criteria by category
+export interface CategoryCriteria {
+  [category: string]: ScoreCriterion[];
+}
