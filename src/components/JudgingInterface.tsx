@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from 'react';
 import { useAuth } from '@/context/AuthContext';
-import { UserRole, Performer, ScoreCriterion, Score, PerformanceScore } from '@/types';
+import { UserRole, Performer, Score } from '@/types';
 import { 
   MagnifyingGlassIcon,
   StarIcon,
@@ -37,7 +37,7 @@ const SCORING_CRITERIA = {
   ]
 };
 
-export default function JudgingInterface({ performers, title, stage }: JudgingInterfaceProps) {
+export default function JudgingInterface({ performers, title }: JudgingInterfaceProps) {
   const { user } = useAuth();
   const [selectedGroup, setSelectedGroup] = useState<string>('all');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
@@ -50,18 +50,7 @@ export default function JudgingInterface({ performers, title, stage }: JudgingIn
   // Check if user is authorized
   const isAuthorized = user?.role === UserRole.ADMIN || user?.role === UserRole.JUDGE;
 
-  if (!isAuthorized) {
-    return (
-      <div className="max-w-6xl mx-auto">
-        <div className="bg-maroon/10 border border-maroon/20 rounded-lg p-6 text-center">
-          <h2 className="text-xl font-semibold text-maroon mb-2">Access Restricted</h2>
-          <p className="text-charcoal-light">This page is only accessible to judges and administrators.</p>
-        </div>
-      </div>
-    );
-  }
-
-  // Get unique groups and categories
+  // Get unique groups and categories - moved before early return
   const groups = useMemo(() => {
     const uniqueGroups = [...new Set(performers.map(p => p.group))];
     return uniqueGroups.sort();
@@ -72,7 +61,7 @@ export default function JudgingInterface({ performers, title, stage }: JudgingIn
     return uniqueCategories.sort();
   }, [performers]);
 
-  // Filter performers
+  // Filter performers - moved before early return
   const filteredPerformers = useMemo(() => {
     return performers.filter(performer => {
       const matchesSearch = performer.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -83,6 +72,17 @@ export default function JudgingInterface({ performers, title, stage }: JudgingIn
       return matchesSearch && matchesGroup && matchesCategory;
     });
   }, [performers, searchTerm, selectedGroup, selectedCategory]);
+
+  if (!isAuthorized) {
+    return (
+      <div className="max-w-6xl mx-auto">
+        <div className="bg-maroon/10 border border-maroon/20 rounded-lg p-6 text-center">
+          <h2 className="text-xl font-semibold text-maroon mb-2">Access Restricted</h2>
+          <p className="text-charcoal-light">This page is only accessible to judges and administrators.</p>
+        </div>
+      </div>
+    );
+  }
 
   // Handle score change
   const handleScoreChange = (performerId: number, criterionId: string, points: number) => {
@@ -375,7 +375,7 @@ function ScoringPanel({
         {/* Remarks Section */}
         <div className="mt-6">
           <label className="block text-sm font-medium text-charcoal mb-2">
-            Judge's Remarks
+            Judge&apos;s Remarks
           </label>
           <textarea
             value={remarks}
