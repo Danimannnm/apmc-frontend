@@ -229,7 +229,7 @@ export default function JudgingInterface({ performers, title }: JudgingInterface
                     } ${
                       hasPerformed ? 'bg-emerald-100 hover:bg-emerald-150' : 'bg-white hover:bg-gray-50'
                     }`}
-                    style={isSelected ? { backgroundColor: 'rgba(254, 236, 199, 0.5)', borderColor: '#f8d273' } : {}}
+                    style={isSelected ? { backgroundColor: 'rgba(255, 255, 255, 0.8)', borderColor: '#f8d273' } : {}}
                   >
                     {/* Row Number */}
                     <td className="px-4 py-3 whitespace-nowrap text-sm">
