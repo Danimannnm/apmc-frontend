@@ -53,12 +53,7 @@ export default function Sidebar() {
       baseItems.push({
         title: 'Admin',
         href: '/admin',
-        requiredRoles: [UserRole.ADMIN],
-        children: [
-          { title: 'User Management', href: '/admin/users' },
-          { title: 'Event Settings', href: '/admin/settings' },
-          { title: 'Reports', href: '/admin/reports' }
-        ]
+        requiredRoles: [UserRole.ADMIN]
       });
     }
 

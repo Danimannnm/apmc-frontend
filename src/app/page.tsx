@@ -93,14 +93,6 @@ export default function HomePage() {
             >
               View Finals
             </Link>
-            {!user && (
-              <Link 
-                href="/login"
-                className="px-8 py-3 border-2 border-emerald-600 text-emerald-600 rounded-lg font-semibold hover:bg-emerald-600 hover:text-white transition-colors duration-200"
-              >
-                Staff Login
-              </Link>
-            )}
           </div>
         </div>
 
