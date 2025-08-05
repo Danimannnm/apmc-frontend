@@ -146,22 +146,12 @@ export default function PerformanceList({
       </div>
 
       {/* Performance Statistics */}
-      <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="bg-card-bg rounded-lg p-4 border border-gray-100 text-center">
-          <div className="text-2xl font-bold text-saffron">{performers.length}</div>
-          <div className="text-charcoal-light text-sm">Total Performers</div>
-        </div>
+      <div className="mt-6 flex justify-center">
         <div className="bg-card-bg rounded-lg p-4 border border-gray-100 text-center">
           <div className="text-2xl font-bold text-emerald-600">
             {performers.filter(p => p.completed).length}
           </div>
           <div className="text-charcoal-light text-sm">Completed</div>
-        </div>
-        <div className="bg-card-bg rounded-lg p-4 border border-gray-100 text-center">
-          <div className="text-2xl font-bold" style={{ color: 'var(--secondary-saffron)' }}>
-            {performers.filter(p => !p.completed).length}
-          </div>
-          <div className="text-charcoal-light text-sm">Remaining</div>
         </div>
       </div>
     </div>

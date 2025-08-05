@@ -338,7 +338,7 @@ export default function JudgingInterface({ performers, title }: JudgingInterface
           </div>
           <div className="flex items-center space-x-1">
             <div className="w-3 h-3 rounded" style={{ backgroundColor: '#f8d273' }}></div>
-            <span>Selected (Bold)</span>
+            <span>Selected </span>
           </div>
         </div>
       </div>
