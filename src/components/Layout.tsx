@@ -3,6 +3,7 @@
 import { ReactNode } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import Sidebar from './Sidebar';
+import LogoTab from './LogoTab';
 
 interface LayoutProps {
   children: ReactNode;
@@ -33,6 +34,9 @@ export default function Layout({ children }: LayoutProps) {
           {children}
         </div>
       </main>
+      
+      {/* Logo pull tab in bottom right corner */}
+      <LogoTab />
     </div>
   );
 }
