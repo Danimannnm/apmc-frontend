@@ -43,6 +43,42 @@ export interface Performer {
   remarks?: string;
 }
 
+// Finals Results interfaces
+export interface FinalsResult {
+  id: number;
+  name: string;
+  group: string;
+  category: string;
+  score: number;
+  institution: string;
+  position: number;
+  medal?: 'gold' | 'silver' | 'bronze';
+  trophy?: string;
+}
+
+export interface InstitutionalAward {
+  id: number;
+  name: string;
+  group: string;
+  category: string;
+  score: number;
+  institution: string;
+  position: number;
+}
+
+export interface AuditionResult {
+  id: number;
+  name: string;
+  group: string;
+  category: string;
+  score: number;
+  institution: string;
+  qualifiedForFinals: boolean;
+}
+
+export type ResultType = FinalsResult | InstitutionalAward;
+export type ViewMode = 'positions' | 'medals' | 'trophies';
+
 export interface ScoreCriterion {
   id: string;
   name: string;

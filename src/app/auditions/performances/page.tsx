@@ -2,7 +2,8 @@
 
 import { useState } from 'react';
 import Layout from '@/components/Layout';
-import PerformanceList, { Performer } from '@/components/PerformanceList';
+import PerformanceList from '@/components/PerformanceList';
+import { Performer } from '@/types';
 
 // Hardcoded auditions data
 const initialAuditionsData: Performer[] = [

@@ -2,21 +2,9 @@
 
 import { useState, useMemo } from 'react';
 import { useAuth } from '@/context/AuthContext';
-import { UserRole } from '@/types';
+import { UserRole, AuditionResult } from '@/types';
 import Layout from '@/components/Layout';
-import { 
-  MagnifyingGlassIcon
-} from '@heroicons/react/24/outline';
-
-interface AuditionResult {
-  id: number;
-  name: string;
-  group: string;
-  category: string;
-  score: number;
-  institution: string;
-  qualifiedForFinals: boolean;
-}
+import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 
 // Sample audition results data - sorted by score (highest first)
 const initialResults: AuditionResult[] = [

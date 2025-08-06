@@ -2,33 +2,8 @@
 
 import { useState, useMemo } from 'react';
 import Layout from '@/components/Layout';
-import { 
-  MagnifyingGlassIcon
-} from '@heroicons/react/24/outline';
-
-interface FinalsResult {
-  id: number;
-  name: string;
-  group: string;
-  category: string;
-  score: number;
-  institution: string;
-  position: number;
-  medal?: 'gold' | 'silver' | 'bronze';
-  trophy?: string;
-}
-
-interface InstitutionalAward {
-  id: number;
-  name: string;
-  group: string;
-  category: string;
-  score: number;
-  institution: string;
-  position: number;
-}
-
-type ResultType = FinalsResult | InstitutionalAward;
+import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
+import { FinalsResult, ViewMode } from '@/types';
 
 // Sample finals results data - sorted by score (highest first)
 const initialResults: FinalsResult[] = [
@@ -186,8 +161,6 @@ const initialResults: FinalsResult[] = [
     medal: 'gold'
   }
 ];
-
-type ViewMode = 'positions' | 'medals' | 'trophies';
 
 export default function FinalsResultsPage() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -467,9 +440,7 @@ export default function FinalsResultsPage() {
                         {/* Score - Hidden in medals view */}
                         {viewMode !== 'medals' && (
                           <td className="px-4 py-3 whitespace-nowrap text-center">
-                            <span className={`text-sm font-semibold ${
-                              result.position <= 3 ? 'text-emerald-600' : 'text-charcoal'
-                            }`}>
+                            <span className="text-sm font-semibold text-charcoal">
                               {result.score}
                             </span>
                           </td>

@@ -2,17 +2,8 @@
 
 import { useState } from 'react';
 import { useAuth } from '@/context/AuthContext';
-import { UserRole } from '@/types';
+import { UserRole, Performer } from '@/types';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
-
-export interface Performer {
-  id: number;
-  name: string;
-  group: string;
-  category: string;
-  institution: string;
-  completed: boolean;
-}
 
 interface PerformanceListProps {
   performers: Performer[];
